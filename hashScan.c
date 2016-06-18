@@ -6,7 +6,7 @@
 #include "Core/core.h"
 #include "control/control.h"
 
-#define VERSION "1.0"
+#define VERSION "1.0.1"
 
 int main(int argc , char **argv){
       if(argc == 1)
