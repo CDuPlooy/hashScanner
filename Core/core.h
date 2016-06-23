@@ -5,4 +5,5 @@ void hashScan_cleanup();
 void printHelp();
 short hashScan_md5_threatexpert(char *filename);
 short hashScan_md5_virustotal(char *filename);
+float hashScan_shannonEntropy(char *filename);
 #endif
