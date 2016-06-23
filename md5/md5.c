@@ -26,9 +26,14 @@ short md5File(char *filename,unsigned char *result){
       quick_return = 0;
       size_t ret;
 
-      while( (ret = fread(buffer, 1, CHUNK_SIZE, fd)) != 0){
+      while( (ret = fread(buffer, 1, CHUNK_SIZE, fd)) != 0)
             MD5_Update(&mdContext, buffer, ret);
+
+      if(ferror(fd)){
+            free(buffer);
+            return 3;
       }
+      free(buffer);
       MD5_Final(result, &mdContext);
       return quick_return;
 }
