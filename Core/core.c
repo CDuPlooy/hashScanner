@@ -67,11 +67,11 @@ short hashScan_md5_threatexpert(char *filename){
       char *name;
 
       extractString(page->data , "<title>","</title>", &name);
-      if(extractString == 0){
+      if(name == NULL){
             puts("Hash is not in threatexpert db.");
       }
       else{
-            if( strstr(name,"ThreatExpert Reports:") == NULL )
+            if( strstr(name,"ThreatExpert Report:") == NULL )
                   puts("Hash is not in threatexpert db.");
             else
                   printf("\t[%s]\n",name);
