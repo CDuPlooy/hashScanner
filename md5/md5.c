@@ -8,42 +8,28 @@
 
 #include "md5.h"
 
+#define CHUNK_SIZE 250
+
 short md5File(char *filename,unsigned char *result){
       //result must be an array of size MD5_DIGEST_LENGTH
       short quick_return = 0;
-      int fd = open(filename,O_RDONLY);
-      if(fd == -1)
+      FILE *fd = fopen(filename,"rb");
+      if(!fd)
             return 1;
 
       MD5_CTX mdContext;
       MD5_Init(&mdContext);
 
-      struct stat st;
-      stat(filename, &st);
-
-      off_t bytes = 0;
-      char *buffer = malloc(250);
+      char *buffer = malloc(CHUNK_SIZE);
       if(!buffer)
             return 2;
-      memset(buffer,0,250);
+      quick_return = 0;
+      size_t ret;
 
-      while(bytes < st.st_size){
-            off_t ret = read(fd, buffer, 250);
-
-            if(ret == -1){
-                  quick_return = 2;
-                  goto md5FileCleanup;
-            }
-            if(ret == 0)
-                  break;
+      while( (ret = fread(buffer, 1, CHUNK_SIZE, fd)) != 0){
             MD5_Update(&mdContext, buffer, ret);
-            bytes+=ret;
-            }
+      }
       MD5_Final(result, &mdContext);
-
-      md5FileCleanup:
-            free(buffer);
-            close(fd);
       return quick_return;
 }
 

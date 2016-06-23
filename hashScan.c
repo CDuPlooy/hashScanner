@@ -14,7 +14,7 @@ int main(int argc , char **argv){
       printf("hashScan Version %s\n",VERSION);
       if ( hashScan_init() != 0 )
             reportCritical("An Error Occured Starting The Scanner", 1);
-      if( hashScan_md5(argv[1]) != 0 )
+      if( hashScan_md5_threatexpert(argv[1]) != 0 )
             reportCritical("An Error Occured While Hashing The File", 2);
       hashScan_cleanup();
       return 0;
